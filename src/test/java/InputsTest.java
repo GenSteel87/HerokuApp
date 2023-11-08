@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,10 +10,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AddRemoveElementsTest {
+public class InputsTest {
     WebDriver driver;
 
     @BeforeMethod
@@ -25,19 +25,26 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
+    public void inputValues() {
         driver.get("https://the-internet.herokuapp.com/");
-        driver.findElement(By.xpath("//a[text()= 'Add/Remove Elements']")).click();
-        WebElement addElementButton = driver.findElement(By.xpath("//button[text()= 'Add Element']"));
-        addElementButton.click();
-        addElementButton.click();
-        driver.findElement(By.xpath("//button[text()= 'Delete'][2]")).click();
+        driver.findElement(By.xpath("//a[text()= 'Inputs']")).click();
+        WebElement inputField = driver.findElement(By.tagName("input"));
+        inputField.click();
+        inputField.sendKeys("TMS");
 
-        Assert.assertEquals(driver.findElements(By.xpath("//button[text()= 'Delete']")).size(), 1);
+        Assert.assertEquals(inputField.getText(), "");
+
+        inputField.click();
+        inputField.sendKeys(Keys.ARROW_UP);
+        Assert.assertEquals(inputField.getText(), "1");
+        //TBD
+        inputField.sendKeys(Keys.ARROW_DOWN);
+        Assert.assertEquals(inputField.getText(), "0");
+
     }
-
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }
+
 }

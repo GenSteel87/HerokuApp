@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AddRemoveElementsTest {
+public class CheckboxesTest {
     WebDriver driver;
 
     @BeforeMethod
@@ -25,15 +25,21 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
+    public void checkboxes() {
         driver.get("https://the-internet.herokuapp.com/");
-        driver.findElement(By.xpath("//a[text()= 'Add/Remove Elements']")).click();
-        WebElement addElementButton = driver.findElement(By.xpath("//button[text()= 'Add Element']"));
-        addElementButton.click();
-        addElementButton.click();
-        driver.findElement(By.xpath("//button[text()= 'Delete'][2]")).click();
+        driver.findElement(By.xpath("//a[text()= 'Checkboxes']")).click();
+        List<WebElement> checkbox = driver.findElements(By.cssSelector("[type=checkbox]"));
 
-        Assert.assertEquals(driver.findElements(By.xpath("//button[text()= 'Delete']")).size(), 1);
+        Assert.assertFalse(checkbox.get(0).isSelected());
+
+        checkbox.get(0).click();
+
+        Assert.assertTrue(checkbox.get(0).isSelected());
+        Assert.assertTrue(checkbox.get(1).isSelected());
+
+        checkbox.get(1).click();
+
+        Assert.assertFalse(checkbox.get(1).isSelected());
     }
 
     @AfterMethod(alwaysRun = true)
@@ -41,3 +47,4 @@ public class AddRemoveElementsTest {
         driver.quit();
     }
 }
+
