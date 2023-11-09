@@ -1,8 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
@@ -26,20 +23,20 @@ public class InputsTest {
 
     @Test
     public void inputValues() {
+
         driver.get("https://the-internet.herokuapp.com/");
         driver.findElement(By.xpath("//a[text()= 'Inputs']")).click();
         WebElement inputField = driver.findElement(By.tagName("input"));
         inputField.click();
         inputField.sendKeys("TMS");
-
-        Assert.assertEquals(inputField.getText(), "");
+        Assert.assertEquals(inputField.getAttribute("value"), "");
 
         inputField.click();
         inputField.sendKeys(Keys.ARROW_UP);
-        Assert.assertEquals(inputField.getText(), "1");
-        //TBD
+        Assert.assertEquals(inputField.getAttribute("value"), "1");
+
         inputField.sendKeys(Keys.ARROW_DOWN);
-        Assert.assertEquals(inputField.getText(), "0");
+        Assert.assertEquals(inputField.getAttribute("value"), "0");
 
     }
     @AfterMethod(alwaysRun = true)
